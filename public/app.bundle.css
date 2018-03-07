@@ -1,3 +1,19 @@
 html, body {
-  margin: 0;
-  background-color: #B21B00; }
+  margin: 0; }
+
+.container table {
+  margin: 0 auto; }
+  .container table .empty-cell {
+    background-color: white; }
+  .container table .new-cell {
+    background-color: orange; }
+  .container table .mature-cell {
+    background-color: red; }
+
+.container table, .container th, .container td {
+  border-collapse: collapse;
+  border: black 1px solid; }
+
+.container td {
+  width: 10px;
+  height: 10px; }

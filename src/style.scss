@@ -1,4 +1,33 @@
+$blank-cell: white;
+$new-cell-color: orange;
+$mature-cell-color: red;
 html,body {
   margin: 0;
-  background-color: #B21B00;
+
+}
+
+.container{
+  table{
+    margin: 0 auto;
+
+    .empty-cell{
+      background-color: $blank-cell;
+    }
+    .new-cell{
+      background-color: $new-cell-color;
+    }
+    .mature-cell{
+      background-color: $mature-cell-color;
+    }
+  }
+  table, th, td {
+    border-collapse: collapse;
+    border: black 1px solid;
+  }
+
+  td{  //CHANGE PIXEL SIZE LATER
+    width: 10px;
+    height: 10px;
+  }
+
 }
