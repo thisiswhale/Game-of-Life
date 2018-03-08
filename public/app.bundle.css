@@ -17,3 +17,9 @@ html, body {
 .container td {
   width: 10px;
   height: 10px; }
+
+.container .btm-nav-bar .btm-nav-btn.neutral-btn {
+  background-color: white; }
+
+.container .btm-nav-bar .btm-nav-btn.selected-size-btn {
+  background-color: gray; }

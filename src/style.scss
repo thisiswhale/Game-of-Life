@@ -1,6 +1,9 @@
 $blank-cell: white;
 $new-cell-color: orange;
 $mature-cell-color: red;
+$neutral-btn-color: white;
+$selected-btn-color: gray;
+
 html,body {
   margin: 0;
 
@@ -28,6 +31,15 @@ html,body {
   td{  //CHANGE PIXEL SIZE LATER
     width: 10px;
     height: 10px;
+  }
+
+  .btm-nav-bar {
+    .btm-nav-btn.neutral-btn{
+      background-color: $neutral-btn-color;
+    }
+    .btm-nav-btn.selected-size-btn{
+      background-color: $selected-btn-color;
+    }
   }
 
 }
