@@ -37,7 +37,7 @@ html,body {
     .btm-nav-btn.neutral-btn{
       background-color: $neutral-btn-color;
     }
-    .btm-nav-btn.selected-size-btn{
+    .selected-size-btn, .selected-speed-btn{
       background-color: $selected-btn-color;
     }
   }

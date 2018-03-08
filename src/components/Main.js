@@ -18,6 +18,7 @@ export default class Main extends Component {
         ]
       ],
       selectedSize: [],
+      selectedSpeed: '',
       counter: 0,
       runGame: false,
       pauseGame: false,
@@ -26,11 +27,15 @@ export default class Main extends Component {
 
   }
   componentDidMount() {
-    this.setState({selectedSize: this.state.gridSize[0]})
+    this.setState({selectedSize: this.state.gridSize[0], selectedSpeed: this.state.simulationSpeed[0]})
   }
 
   setSelectedSize(gridSize) {
     this.setState({ selectedSize: gridSize })
+  }
+
+  setSelectedSpeed(speed) {
+    this.setState({ selectedSpeed: speed })
   }
 
   render() {
@@ -64,9 +69,18 @@ export default class Main extends Component {
         <div className='panel simulation-panel'>
           <span className='board-size'>Sim Speed:
           </span>
-          <button className='btm-nav-btn'>slow</button>
-          <button className='btm-nav-btn'>Normal</button>
-          <button className='btm-nav-btn'>Fast</button>
+          <button
+            className={`btm-nav-btn ${this.state.selectedSpeed === this.state.simulationSpeed[0] ? 'selected-speed-btn' : 'neutral-btn' }`}
+            onClick={() => this.setSelectedSpeed(this.state.simulationSpeed[0])}
+            >slow</button>
+          <button
+            className={`btm-nav-btn ${this.state.selectedSpeed === this.state.simulationSpeed[1] ? 'selected-speed-btn' : 'neutral-btn' }`}
+            onClick={() => this.setSelectedSpeed(this.state.simulationSpeed[1])}
+            >Normal</button>
+          <button
+            className={`btm-nav-btn ${this.state.selectedSpeed === this.state.simulationSpeed[2] ? 'selected-speed-btn' : 'neutral-btn' }`}
+            onClick={() => this.setSelectedSpeed(this.state.simulationSpeed[2])}
+            >Fast</button>
         </div>
       </div>
     </div>);
