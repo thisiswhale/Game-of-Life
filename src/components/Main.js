@@ -8,13 +8,13 @@ export default class Main extends Component {
     this.state = {
       gridSize: [
         [
+          30, 10
+        ],
+        [
+          40, 20
+        ],
+        [
           50, 30
-        ],
-        [
-          70, 50
-        ],
-        [
-          100, 80
         ]
       ],
       selectedSize: [],

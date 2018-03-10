@@ -4,14 +4,42 @@ $mature-cell-color: red;
 $neutral-btn-color: white;
 $selected-btn-color: gray;
 
-html,body {
+body {
   margin: 0;
+  font-family: 'Ubuntu', sans-serif;
+}
 
+button{
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: auto;
+  border-radius: 5px;
 }
 
 .container{
+  margin:0 auto;
+  width: 90%;
+  font-size: 20px;
+  .title{
+    text-align: center;
+    font-size: 40px;
+  }
+  .top-nav-bar{
+    text-align: center;
+    margin-left:  auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 10px;
+
+  }
   table{
-    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 
     .empty-cell{
       background-color: $blank-cell;
@@ -34,11 +62,19 @@ html,body {
   }
 
   .btm-nav-bar {
+    text-align: center;
+    position: absolute;
+    margin-left:-150px;
+    left: 50%;
+    bottom: 15px;
     .btm-nav-btn.neutral-btn{
       background-color: $neutral-btn-color;
     }
     .selected-size-btn, .selected-speed-btn{
       background-color: $selected-btn-color;
+    }
+    .board-size-panel{
+      margin-bottom: 10px;
     }
   }
 
