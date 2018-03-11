@@ -1,6 +1,8 @@
 body {
   margin: 0;
-  font-family: 'Ubuntu', sans-serif; }
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #5c8d23;
+  color: #35291f; }
 
 button {
   font-family: 'Ubuntu', sans-serif;
@@ -10,13 +12,17 @@ button {
   width: auto;
   border-radius: 5px; }
 
+button:focus {
+  outline: none; }
+
 .container {
   margin: 0 auto;
   width: 90%;
   font-size: 20px; }
   .container .title {
     text-align: center;
-    font-size: 40px; }
+    font-size: 50px;
+    font-weight: bold; }
   .container .top-nav-bar {
     text-align: center;
     margin-left: auto;
@@ -30,14 +36,14 @@ button {
     margin-right: -50%;
     transform: translate(-50%, -50%); }
     .container table .empty-cell {
-      background-color: white; }
+      background-color: #ADB6BB; }
     .container table .new-cell {
-      background-color: orange; }
+      background-color: #EEDB74; }
     .container table .mature-cell {
-      background-color: red; }
+      background-color: #C57200; }
   .container table, .container th, .container td {
     border-collapse: collapse;
-    border: black 1px solid; }
+    border: #222120 1px solid; }
   .container td {
     width: 10px;
     height: 10px; }
@@ -48,8 +54,10 @@ button {
     left: 50%;
     bottom: 15px; }
     .container .btm-nav-bar .btm-nav-btn.neutral-btn {
-      background-color: white; }
+      color: #333C1A;
+      background-color: #C57200; }
     .container .btm-nav-bar .selected-size-btn, .container .btm-nav-bar .selected-speed-btn {
-      background-color: gray; }
+      color: #785722;
+      background-color: #EEDB74; }
     .container .btm-nav-bar .board-size-panel {
       margin-bottom: 10px; }

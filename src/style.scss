@@ -1,12 +1,16 @@
-$blank-cell: white;
-$new-cell-color: orange;
-$mature-cell-color: red;
-$neutral-btn-color: white;
-$selected-btn-color: gray;
+$blank-cell: #ADB6BB;
+$new-cell-color: #EEDB74;
+$mature-cell-color: #C57200;
+$neutral-btn-color: #C57200;
+$neutral-btn-color-text: #333C1A;
+$selected-btn-color: #EEDB74;
+$selected-btn-color-text: #785722;
 
 body {
   margin: 0;
   font-family: 'Ubuntu', sans-serif;
+  background-color:  rgb(92,141,35);
+  color: rgb(53,41,31)//rgb(64,68,28);
 }
 
 button{
@@ -17,6 +21,9 @@ button{
   width: auto;
   border-radius: 5px;
 }
+button:focus{
+  outline: none;
+}
 
 .container{
   margin:0 auto;
@@ -24,7 +31,9 @@ button{
   font-size: 20px;
   .title{
     text-align: center;
-    font-size: 40px;
+    font-size: 50px;
+    font-weight: bold;
+
   }
   .top-nav-bar{
     text-align: center;
@@ -53,7 +62,7 @@ button{
   }
   table, th, td {
     border-collapse: collapse;
-    border: black 1px solid;
+    border: #222120 1px solid;
   }
 
   td{  //CHANGE PIXEL SIZE LATER
@@ -68,9 +77,11 @@ button{
     left: 50%;
     bottom: 15px;
     .btm-nav-btn.neutral-btn{
+      color: $neutral-btn-color-text;
       background-color: $neutral-btn-color;
     }
     .selected-size-btn, .selected-speed-btn{
+      color: $selected-btn-color-text;
       background-color: $selected-btn-color;
     }
     .board-size-panel{
