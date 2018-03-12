@@ -1,22 +1,17 @@
 import React, {Component} from 'react';
 
 export default class Cell extends Component {
-  constructor(){
-    super();
-    this.state = {
-      color: 'empty-cell'
-    }
+
+  selectCell = () => {
+    this.props.selectCell(this.props.row, this.props.col)
   }
 
-  addLife = () =>{
-    this.setState({color: 'new-cell'})
-  }
   render() {
     return (
       <td
-        className={this.state.color}
+        className={this.props.cellClass}
         key={this.props.cellID}
         id={this.props.cellID}
-        onClick={this.addLife}></td>)
+        onClick={this.selectCell}></td>)
   }
 }

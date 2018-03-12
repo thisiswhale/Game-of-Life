@@ -33,8 +33,10 @@ button:focus {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    margin: 5px;
+    padding: 5px;
+    background-color: white; }
     .container table .empty-cell {
       background-color: #ADB6BB; }
     .container table .new-cell {
