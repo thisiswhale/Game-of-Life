@@ -8,7 +8,6 @@ export default class Grid extends Component {
     const row = this.props.row;
     let grid = [];
     let cellClass = '';
-    console.log(this.props.gridFull)
     for(let i = 0; i < row; i++){
       let rowID = `row${i}`
       let rowOfCells = []

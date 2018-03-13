@@ -43,7 +43,7 @@ export default class Main extends Component {
   }
 
   playButton = () =>{
-    clearInterval(this.intervalID)
+    clearInterval(this.intervalId)
     this.intervalId = setInterval(this.play, 100)
   }
 
@@ -56,7 +56,7 @@ export default class Main extends Component {
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         let count = 0
-        //check top row
+        //check this position [i,j], and check all its neighbors
         if (i > 0) if (grid[i - 1][j]) count++
         if (i > 0 && j > 0) if (grid[i - 1][j - 1]) count++
         if (i > 0 && j < cols - 1) if (grid[i - 1][j + 1]) count++
@@ -67,7 +67,7 @@ export default class Main extends Component {
         if (i < rows - 1) if (grid[i + 1][j]) count++
         if (i < rows - 1 && j > 0) if (grid[i + 1][j - 1]) count++
         if (i < rows - 1 && cols - 1) if (grid[i + 1][j + 1]) count++
-        
+
         //false when there more or less than three neighbors
         if (grid[i][j] && (count < 2 || count > 3)) grid2[i][j] = false
         //true when there are three neighbors
@@ -82,7 +82,6 @@ export default class Main extends Component {
 
   seed = () => {
     let gridCopy = arrayClone(this.state.gridFull)
-    console.log(gridCopy)
     for(let i = 0; i < this.state.selectedSize[0]; i++){
       for(let j = 0; j < this.state.selectedSize[1]; j++){
         if(Math.floor(Math.random() * 4) === 1){
@@ -93,13 +92,13 @@ export default class Main extends Component {
     this.setState({gridFull:gridCopy})
 
   }
-  pause = () => {
-    clearInterval(this.intervalID)
+  pauseButton = () => {
+    clearInterval(this.intervalId)
   }
 
-  clear = () => {
+  clearButton = () => {
     this.setState({
-      gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
+      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)) })
   }
 
   selectCell = (row,col) => {
@@ -128,12 +127,12 @@ export default class Main extends Component {
     const slow = this.state.simulationSpeed[0]
     const normal = this.state.simulationSpeed[1]
     const fast = this.state.simulationSpeed[2]
-
+    console.log(this.state.gridFull)
     return (<div>
       <div className='top-nav-bar'>
         <button onClick={this.playButton} className='top-nav-btn'>Run</button>
-        <button onClick={this.pause} className='top-nav-btn'>Pause</button>
-        <button onClick={this.clear} className='top-nav-btn'>Clear</button>
+        <button onClick={this.pauseButton} className='top-nav-btn'>Pause</button>
+        <button onClick={this.clearButton} className='top-nav-btn'>Clear</button>
         <span className='generation'>Generation:
         </span>
         <span className='generation-counter'>{this.state.generation}</span>
