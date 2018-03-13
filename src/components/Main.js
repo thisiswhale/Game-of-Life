@@ -10,15 +10,9 @@ export default class Main extends Component {
 
     this.state = {
       gridSize: [
-        [
-          30, 50
-        ],
-        [
-          35, 70
-        ],
-        [
-          40, 80
-        ]
+        [30, 50],
+        [35, 70],
+        [40, 80]
       ],
       gridFull: [],
       selectedSize: [],
@@ -32,8 +26,8 @@ export default class Main extends Component {
   }
 
   playButton = () =>{
-    clearInterval(this.intervalId)
-    this.intervalId = setInterval(this.play, this.state.selectedSpeed)
+    clearInterval(this.intervalID)
+    this.intervalID = setInterval(this.play, this.state.selectedSpeed)
     this.setState({isPlaying: true, isPaused: false})
   }
 
@@ -90,7 +84,7 @@ export default class Main extends Component {
   }
 
   pauseButton = () => {
-    clearInterval(this.intervalId)
+    clearInterval(this.intervalID)
     this.setState({isPlaying: false, isPaused: true})
   }
 
@@ -100,11 +94,12 @@ export default class Main extends Component {
       isPlaying: false,
       isPaused: false,
       generation: 0})
-    clearInterval(this.intervalId)
+    clearInterval(this.intervalID)
   }
 
-  setSize(gridSize) {
-    clearInterval(this.intervalId)
+  setSize = (gridSize) =>{
+    console.log(gridSize)
+    clearInterval(this.intervalID)
     this.setState({
       selectedSize: gridSize,
       generation: 0,
@@ -113,9 +108,14 @@ export default class Main extends Component {
       gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
   }
 
-  setSpeed(speed) {
-    this.setState({ selectedSpeed: speed, isPlaying: false, isPaused: false })
-    clearInterval(this.intervalId)
+  setSpeed = (speed) => {
+    if(this.state.isPlaying){
+      this.setState({ selectedSpeed: speed, isPlaying: false, isPaused: true })
+    }
+    else {
+      this.setState({ selectedSpeed: speed})
+    }
+    clearInterval(this.intervalID)
   }
 
   selectCell = (row,col) => {

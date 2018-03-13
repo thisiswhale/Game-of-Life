@@ -1,7 +1,7 @@
 import React from "react";
 
 const Title = () => (
-  <h2 className='title'>Game of Life</h2>
+  <h2 className='title'>GAME OF LIFE</h2>
 );
 
 const Container = props => (

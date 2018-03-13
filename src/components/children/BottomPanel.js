@@ -8,10 +8,10 @@ export default class BottomPanel extends Component {
         speedLvl,
         selectedSize,
         selectedSpeed,
-        setSize,
         setSpeed,
+        setSize
       } = this.props;
-      
+
       const smallGrid = gridSize[0]
       const mediumGrid = gridSize[1]
       const largeGrid = gridSize[2]

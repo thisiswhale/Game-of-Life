@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
   background-color: #5c8d23;
   color: #35291f; }
 
@@ -22,8 +23,7 @@ button:focus {
   font-size: 20px; }
   .container .title {
     text-align: center;
-    font-size: 50px;
-    font-weight: bold;
+    font-size: 60px;
     margin-bottom: 5px; }
   .container .top-nav-bar {
     text-align: center;
