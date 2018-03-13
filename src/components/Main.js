@@ -22,7 +22,9 @@ export default class Main extends Component {
       selectedSize: [],
       selectedSpeed: '',
       generation: 0,
-      simulationSpeed: [500, 300, 100]
+      simulationSpeed: [500, 300, 100],
+      isPlaying: false,
+      isPause: false
     }
 
   }
@@ -37,12 +39,14 @@ export default class Main extends Component {
 
   }
   componentDidMount(){
-    this.seed();
+    this.seed()
+    this.playButton()
   }
 
   playButton = () =>{
     clearInterval(this.intervalId)
     this.intervalId = setInterval(this.play, this.state.selectedSpeed)
+    this.setState({isPlaying: true, isPause: false})
   }
 
   play = () => {
@@ -99,13 +103,14 @@ export default class Main extends Component {
 
   pauseButton = () => {
     clearInterval(this.intervalId)
+    this.setState({isPlaying: false, isPause: true})
   }
 
   clearButton = () => {
     this.setState({
       gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
       generation: 0})
-    this.pauseButton();
+    clearInterval(this.intervalId)
   }
 
   selectCell = (row,col) => {
@@ -117,14 +122,18 @@ export default class Main extends Component {
   }
 
   setSelectedSize(gridSize) {
+    clearInterval(this.intervalId)
     this.setState({
       selectedSize: gridSize,
+      generation: 0,
+      isPlaying: false,
+      isPause: false,
       gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
   }
 
   setSelectedSpeed(speed) {
     this.setState({ selectedSpeed: speed })
-    this.playButton()
+    this.pauseButton()
   }
 
   render() {
@@ -137,10 +146,10 @@ export default class Main extends Component {
     const fast = this.state.simulationSpeed[2]
     return (<div>
       <div className='top-nav-bar'>
-        <button onClick={this.playButton} className='top-nav-btn'>Run</button>
-        <button onClick={this.seedButton} className='top-nav-btn'>Seed</button>
-        <button onClick={this.pauseButton} className='top-nav-btn'>Pause</button>
-        <button onClick={this.clearButton} className='top-nav-btn'>Clear</button>
+        <button onClick={this.playButton} className={`top-nav-btn ${this.state.isPlaying ? 'selected-btn' : 'neutral-btn' }`}>Run</button>
+        <button onClick={this.seedButton} className='top-nav-btn seed-btn neutral-btn'>Seed</button>
+        <button onClick={this.pauseButton} className={`top-nav-btn ${this.state.isPause ? 'selected-btn' : 'neutral-btn'}`}>Pause</button>
+        <button onClick={this.clearButton} className='top-nav-btn clear-btn neutral-btn'>Clear</button>
         <span className='generation'>Generation:
         </span>
         <span className='generation-counter'>{this.state.generation}</span>
