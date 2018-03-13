@@ -4,15 +4,16 @@ import Cell from './Cell'
 export default class Grid extends Component {
 
   render() {
-    const columnSize = this.props.size[0];
-    const  rowSize = this.props.size[1];
+    const col = this.props.cols;
+    const row = this.props.row;
     let grid = [];
     let cellClass = '';
-    for(let i = 0; i < rowSize; i++){
+    console.log(this.props.gridFull)
+    for(let i = 0; i < row; i++){
       let rowID = `row${i}`
       let rowOfCells = []
 
-      for(let j = 0; j < columnSize; j++){
+      for(let j = 0; j < col; j++){
         let cellID = `cell${i}_${j}`
         cellClass = this.props.gridFull[i][j] ? 'new-cell': 'empty-cell';
         rowOfCells.push(<Cell

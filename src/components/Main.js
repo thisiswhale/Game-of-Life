@@ -5,16 +5,17 @@ export default class Main extends Component {
 
   constructor() {
     super();
+
     this.state = {
       gridSize: [
         [
-          30, 10
+          10, 30
         ],
         [
-          40, 20
+          20, 40
         ],
         [
-          50, 30
+          30, 50
         ]
       ],
       gridFull: [],
@@ -23,30 +24,96 @@ export default class Main extends Component {
       generation: 0,
       runGame: false,
       pauseGame: false,
-      simulationSpeed: [10, 20, 30]
+      simulationSpeed: [100, 200, 300]
     }
 
   }
-  componentDidMount() {
-    let defaultSize = this.state.gridSize[0];
+  componentWillMount() {
+    let defaultSize = this.state.gridSize[0]
     let defaultSpeed = this.state.simulationSpeed[0]
     this.setState({
       selectedSize: defaultSize,
       selectedSpeed: this.state.simulationSpeed[0],
-      gridFull: Array(defaultSize[0]).fill().map(()=> Array(defaultSize[1]).fill(false))
+      gridFull: Array(defaultSize[0]).fill(Array(defaultSize[1]).fill(false))
     })
+
+  }
+  componentDidMount(){
+    this.seed();
+  }
+
+  playButton = () =>{
+    clearInterval(this.intervalID)
+    this.intervalId = setInterval(this.play, 100)
+  }
+
+  play = () => {
+    let grid = this.state.gridFull;
+    let grid2 = arrayClone(this.state.gridFull)
+    let rows = this.state.selectedSize[0]
+    let cols = this.state.selectedSize[1]
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        let count = 0
+        //check top row
+        if (i > 0) if (grid[i - 1][j]) count++
+        if (i > 0 && j > 0) if (grid[i - 1][j - 1]) count++
+        if (i > 0 && j < cols - 1) if (grid[i - 1][j + 1]) count++
+
+        if (j < cols - 1) if (grid[i][j + 1]) count++
+        if (j > 0) if (grid[i][j - 1]) count++
+
+        if (i < rows - 1) if (grid[i + 1][j]) count++
+        if (i < rows - 1 && j > 0) if (grid[i + 1][j - 1]) count++
+        if (i < rows - 1 && cols - 1) if (grid[i + 1][j + 1]) count++
+        
+        //false when there more or less than three neighbors
+        if (grid[i][j] && (count < 2 || count > 3)) grid2[i][j] = false
+        //true when there are three neighbors
+        if (!grid[i][j] && count === 3) grid2[i][j] = true
+      }
+    }
+    this.setState({
+      gridFull: grid2,
+      generation: this.state.generation + 1
+      });
+  }
+
+  seed = () => {
+    let gridCopy = arrayClone(this.state.gridFull)
+    console.log(gridCopy)
+    for(let i = 0; i < this.state.selectedSize[0]; i++){
+      for(let j = 0; j < this.state.selectedSize[1]; j++){
+        if(Math.floor(Math.random() * 4) === 1){
+          gridCopy[i][j] = true
+        }
+      }
+    }
+    this.setState({gridFull:gridCopy})
+
+  }
+  pause = () => {
+    clearInterval(this.intervalID)
+  }
+
+  clear = () => {
+    this.setState({
+      gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
   }
 
   selectCell = (row,col) => {
-    let gridCopy = arrayClone(this.state.gridFull);
-    gridCopy[row][col] = !gridCopy[row][col];
+    let gridCopy = arrayClone(this.state.gridFull)
+    gridCopy[row][col] = !gridCopy[row][col]
     this.setState({
       gridFull: gridCopy
     })
   }
 
   setSelectedSize(gridSize) {
-    this.setState({ selectedSize: gridSize, gridFull: Array(gridSize[0]).fill().map(()=> Array(gridSize[1]).fill(false)) })
+    this.setState({
+      selectedSize: gridSize,
+      gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
   }
 
   setSelectedSpeed(speed) {
@@ -61,20 +128,21 @@ export default class Main extends Component {
     const slow = this.state.simulationSpeed[0]
     const normal = this.state.simulationSpeed[1]
     const fast = this.state.simulationSpeed[2]
-    
+
     return (<div>
       <div className='top-nav-bar'>
-        <button className='top-nav-btn'>Run</button>
-        <button className='top-nav-btn'>Pause</button>
-        <button className='top-nav-btn'>Clear</button>
+        <button onClick={this.playButton} className='top-nav-btn'>Run</button>
+        <button onClick={this.pause} className='top-nav-btn'>Pause</button>
+        <button onClick={this.clear} className='top-nav-btn'>Clear</button>
         <span className='generation'>Generation:
         </span>
         <span className='generation-counter'>{this.state.generation}</span>
       </div>
       <Grid
-        size={this.state.selectedSize}
+        row={this.state.selectedSize[0]}
+        cols={this.state.selectedSize[1]}
         gridFull={this.state.gridFull}
-        selectCell= {this.selectCell}/>
+        selectCell={this.selectCell}/>
       <div className='btm-nav-bar'>
         <div className='panel board-size-panel'>
           <span className='board-size'>Board Size:
@@ -114,5 +182,5 @@ export default class Main extends Component {
 }
 
 function arrayClone(arr){
-  return JSON.parse(JSON.stringify(arr));
+  return JSON.parse(JSON.stringify(arr))
 }
