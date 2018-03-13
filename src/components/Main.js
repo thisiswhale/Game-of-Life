@@ -109,6 +109,8 @@ export default class Main extends Component {
   clearButton = () => {
     this.setState({
       gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
+      isPlaying: false,
+      isPause: false,
       generation: 0})
     clearInterval(this.intervalId)
   }
@@ -132,8 +134,8 @@ export default class Main extends Component {
   }
 
   setSelectedSpeed(speed) {
-    this.setState({ selectedSpeed: speed })
-    this.pauseButton()
+    this.setState({ selectedSpeed: speed, isPlaying: false, isPause: false })
+    clearInterval(this.intervalId)
   }
 
   render() {

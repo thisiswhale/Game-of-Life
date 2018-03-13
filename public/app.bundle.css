@@ -47,7 +47,14 @@ button:focus {
     transform: translate(-50%, -50%);
     margin: 5px;
     padding: 5px;
-    box-shadow: 5px 10px 16px 0 rgba(0, 0, 0, 0.2); }
+    box-shadow: 5px 10px 16px 0 rgba(0, 0, 0, 0.2);
+    border: #222120 2px solid; }
+    .container table td,
+    .container table th {
+      border: #222120 1px solid; }
+    .container table td {
+      width: 10px;
+      height: 10px; }
     .container table .empty-cell {
       background-color: #ADB6BB; }
     .container table .new-cell {
@@ -55,11 +62,7 @@ button:focus {
   .container table,
   .container td,
   .container th {
-    border-collapse: collapse;
-    border: #222120 1px solid; }
-  .container td {
-    width: 10px;
-    height: 10px; }
+    border-collapse: collapse; }
   .container .btm-nav-bar {
     text-align: center;
     position: absolute;

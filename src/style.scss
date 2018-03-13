@@ -69,7 +69,15 @@ button:focus {
     margin: 5px;
     padding: 5px;
     box-shadow: 5px 10px 16px 0 hsla(0, 0%, 0%, 0.2);
-
+    border: #222120 2px solid;
+    td,
+    th {
+      border: #222120 1px solid;
+    }
+    td {
+      width: 10px;
+      height: 10px;
+    }
     .empty-cell {
       background-color: $blank-cell;
     }
@@ -83,13 +91,6 @@ button:focus {
   td,
   th {
     border-collapse: collapse;
-    border: #222120 1px solid;
-  }
-
-  td {
-    //CHANGE PIXEL SIZE LATER
-    width: 10px;
-    height: 10px;
   }
 
   .btm-nav-bar {
