@@ -9,31 +9,29 @@ export default class Main extends Component {
     this.state = {
       gridSize: [
         [
-          10, 30
-        ],
-        [
-          20, 40
-        ],
-        [
           30, 50
+        ],
+        [
+          35, 70
+        ],
+        [
+          40, 80
         ]
       ],
       gridFull: [],
       selectedSize: [],
       selectedSpeed: '',
       generation: 0,
-      runGame: false,
-      pauseGame: false,
-      simulationSpeed: [100, 200, 300]
+      simulationSpeed: [500, 300, 100]
     }
 
   }
   componentWillMount() {
     let defaultSize = this.state.gridSize[0]
-    let defaultSpeed = this.state.simulationSpeed[0]
+    let defaultSpeed = this.state.simulationSpeed[1]
     this.setState({
       selectedSize: defaultSize,
-      selectedSpeed: this.state.simulationSpeed[0],
+      selectedSpeed: defaultSpeed,
       gridFull: Array(defaultSize[0]).fill(Array(defaultSize[1]).fill(false))
     })
 
@@ -44,7 +42,7 @@ export default class Main extends Component {
 
   playButton = () =>{
     clearInterval(this.intervalId)
-    this.intervalId = setInterval(this.play, 100)
+    this.intervalId = setInterval(this.play, this.state.selectedSpeed)
   }
 
   play = () => {
@@ -90,15 +88,24 @@ export default class Main extends Component {
       }
     }
     this.setState({gridFull:gridCopy})
-
   }
+
+  seedButton = () => {
+    this.setState({
+      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
+    })
+    this.seed();
+  }
+
   pauseButton = () => {
     clearInterval(this.intervalId)
   }
 
   clearButton = () => {
     this.setState({
-      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)) })
+      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
+      generation: 0})
+    this.pauseButton();
   }
 
   selectCell = (row,col) => {
@@ -117,6 +124,7 @@ export default class Main extends Component {
 
   setSelectedSpeed(speed) {
     this.setState({ selectedSpeed: speed })
+    this.playButton()
   }
 
   render() {
@@ -127,10 +135,10 @@ export default class Main extends Component {
     const slow = this.state.simulationSpeed[0]
     const normal = this.state.simulationSpeed[1]
     const fast = this.state.simulationSpeed[2]
-    console.log(this.state.gridFull)
     return (<div>
       <div className='top-nav-bar'>
         <button onClick={this.playButton} className='top-nav-btn'>Run</button>
+        <button onClick={this.seedButton} className='top-nav-btn'>Seed</button>
         <button onClick={this.pauseButton} className='top-nav-btn'>Pause</button>
         <button onClick={this.clearButton} className='top-nav-btn'>Clear</button>
         <span className='generation'>Generation:

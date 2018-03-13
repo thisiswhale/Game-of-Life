@@ -22,7 +22,8 @@ button:focus {
   .container .title {
     text-align: center;
     font-size: 50px;
-    font-weight: bold; }
+    font-weight: bold;
+    margin-bottom: 5px; }
   .container .top-nav-bar {
     text-align: center;
     margin-left: auto;
