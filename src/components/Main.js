@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import Grid from './Grid'
+import TopPanel from './children/TopPanel'
+import Grid from './children/Grid'
+import BottomPanel from './children/BottomPanel'
 
 export default class Main extends Component {
 
@@ -22,35 +24,21 @@ export default class Main extends Component {
       selectedSize: [],
       selectedSpeed: '',
       generation: 0,
-      simulationSpeed: [500, 300, 100],
+      speedLvl: [500, 300, 100],
       isPlaying: false,
-      isPause: false
+      isPaused: false
     }
 
-  }
-  componentWillMount() {
-    let defaultSize = this.state.gridSize[0]
-    let defaultSpeed = this.state.simulationSpeed[1]
-    this.setState({
-      selectedSize: defaultSize,
-      selectedSpeed: defaultSpeed,
-      gridFull: Array(defaultSize[0]).fill(Array(defaultSize[1]).fill(false))
-    })
-
-  }
-  componentDidMount(){
-    this.seed()
-    this.playButton()
   }
 
   playButton = () =>{
     clearInterval(this.intervalId)
     this.intervalId = setInterval(this.play, this.state.selectedSpeed)
-    this.setState({isPlaying: true, isPause: false})
+    this.setState({isPlaying: true, isPaused: false})
   }
 
   play = () => {
-    let grid = this.state.gridFull;
+    let grid = this.state.gridFull
     let grid2 = arrayClone(this.state.gridFull)
     let rows = this.state.selectedSize[0]
     let cols = this.state.selectedSize[1]
@@ -79,7 +67,14 @@ export default class Main extends Component {
     this.setState({
       gridFull: grid2,
       generation: this.state.generation + 1
-      });
+      })
+  }
+
+  seedButton = () => {
+    this.setState({
+      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
+    })
+    this.seed()
   }
 
   seed = () => {
@@ -94,24 +89,32 @@ export default class Main extends Component {
     this.setState({gridFull:gridCopy})
   }
 
-  seedButton = () => {
-    this.setState({
-      gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
-    })
-    this.seed();
-  }
-
   pauseButton = () => {
     clearInterval(this.intervalId)
-    this.setState({isPlaying: false, isPause: true})
+    this.setState({isPlaying: false, isPaused: true})
   }
 
   clearButton = () => {
     this.setState({
       gridFull: Array(this.state.selectedSize[0]).fill(Array(this.state.selectedSize[1]).fill(false)),
       isPlaying: false,
-      isPause: false,
+      isPaused: false,
       generation: 0})
+    clearInterval(this.intervalId)
+  }
+
+  setSize(gridSize) {
+    clearInterval(this.intervalId)
+    this.setState({
+      selectedSize: gridSize,
+      generation: 0,
+      isPlaying: false,
+      isPaused: false,
+      gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
+  }
+
+  setSpeed(speed) {
+    this.setState({ selectedSpeed: speed, isPlaying: false, isPaused: false })
     clearInterval(this.intervalId)
   }
 
@@ -123,78 +126,45 @@ export default class Main extends Component {
     })
   }
 
-  setSelectedSize(gridSize) {
-    clearInterval(this.intervalId)
+  componentWillMount() {
+    let defaultSize = this.state.gridSize[0]
+    let defaultSpeed = this.state.speedLvl[1]
     this.setState({
-      selectedSize: gridSize,
-      generation: 0,
-      isPlaying: false,
-      isPause: false,
-      gridFull: Array(gridSize[0]).fill(Array(gridSize[1]).fill(false)) })
+      selectedSize: defaultSize,
+      selectedSpeed: defaultSpeed,
+      gridFull: Array(defaultSize[0]).fill(Array(defaultSize[1]).fill(false))
+    })
   }
 
-  setSelectedSpeed(speed) {
-    this.setState({ selectedSpeed: speed, isPlaying: false, isPause: false })
-    clearInterval(this.intervalId)
+  componentDidMount(){
+    this.seed()
+    this.playButton()
   }
 
   render() {
-    const smallGrid = this.state.gridSize[0]
-    const mediumGrid = this.state.gridSize[1]
-    const largeGrid = this.state.gridSize[2]
 
-    const slow = this.state.simulationSpeed[0]
-    const normal = this.state.simulationSpeed[1]
-    const fast = this.state.simulationSpeed[2]
     return (<div>
-      <div className='top-nav-bar'>
-        <button onClick={this.playButton} className={`top-nav-btn ${this.state.isPlaying ? 'selected-btn' : 'neutral-btn' }`}>Run</button>
-        <button onClick={this.seedButton} className='top-nav-btn seed-btn neutral-btn'>Seed</button>
-        <button onClick={this.pauseButton} className={`top-nav-btn ${this.state.isPause ? 'selected-btn' : 'neutral-btn'}`}>Pause</button>
-        <button onClick={this.clearButton} className='top-nav-btn clear-btn neutral-btn'>Clear</button>
-        <span className='generation'>Generation:
-        </span>
-        <span className='generation-counter'>{this.state.generation}</span>
-      </div>
+      <TopPanel
+        playButton={this.playButton}
+        seedButton={this.seedButton}
+        pauseButton={this.pauseButton}
+        clearButton={this.clearButton}
+        isPlaying={this.state.isPlaying}
+        isPaused={this.state.isPaused}
+        generation={this.state.generation}
+      />
       <Grid
-        row={this.state.selectedSize[0]}
-        cols={this.state.selectedSize[1]}
+        selectedSize={this.state.selectedSize}
         gridFull={this.state.gridFull}
         selectCell={this.selectCell}/>
-      <div className='btm-nav-bar'>
-        <div className='panel board-size-panel'>
-          <span className='board-size'>Board Size:
-          </span>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSize === smallGrid? 'selected-size-btn' : 'neutral-btn' }`}
-            onClick= {() => this.setSelectedSize(smallGrid)}
-            >{smallGrid[0]}x{smallGrid[1]}</button>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSize === mediumGrid? 'selected-size-btn' : 'neutral-btn' }`}
-            onClick={() => this.setSelectedSize(mediumGrid)}
-            >{mediumGrid[0]}x{mediumGrid[1]}</button>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSize === largeGrid? 'selected-size-btn' : 'neutral-btn' }`}
-            onClick={() => this.setSelectedSize(largeGrid)}
-            >{largeGrid[0]}x{largeGrid[1]}</button>
-        </div>
-        <div className='panel simulation-panel'>
-          <span className='board-size'>Sim Speed:
-          </span>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSpeed === slow? 'selected-speed-btn' : 'neutral-btn' }`}
-            onClick={() => this.setSelectedSpeed(slow)}
-            >Slow</button>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSpeed === normal ? 'selected-speed-btn' : 'neutral-btn' }`}
-            onClick={() => this.setSelectedSpeed(normal)}
-            >Normal</button>
-          <button
-            className={`btm-nav-btn ${this.state.selectedSpeed === fast ? 'selected-speed-btn' : 'neutral-btn' }`}
-            onClick={() => this.setSelectedSpeed(fast)}
-            >Fast</button>
-        </div>
-      </div>
+      <BottomPanel
+        gridSize = {this.state.gridSize}
+        speedLvl = {this.state.speedLvl}
+        selectedSize = {this.state.selectedSize}
+        selectedSpeed = {this.state.selectedSpeed}
+        setSize = {this.setSize}
+        setSpeed = {this.setSpeed}
+      />
     </div>);
   }
 }

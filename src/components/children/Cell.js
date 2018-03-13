@@ -7,11 +7,16 @@ export default class Cell extends Component {
   }
 
   render() {
+    const {
+      cellClass,
+      cellID
+    } = this.props
+
     return (
       <td
-        className={this.props.cellClass}
-        key={this.props.cellID}
-        id={this.props.cellID}
+        className={cellClass}
+        key={cellID}
+        id={cellID}
         onClick={this.selectCell}></td>)
   }
 }
